@@ -1,6 +1,9 @@
 # WealthWeave
 
-WealthWeave is an innovative mobile application designed to simplify personal finance management through a collaborative and interactive experience. Our goal is to provide a seamless platform that allows users to manage their budgets, track expenses, and weave their financial growth together.
+WealthWeave is an innovative mobile application designed to simplify personal
+finance management through a collaborative and interactive experience. Our goal
+is to provide a seamless platform that allows users to manage their budgets,
+track expenses, and weave their financial growth together.
 
 ## Features
 
@@ -10,7 +13,9 @@ WealthWeave is an innovative mobile application designed to simplify personal fi
 - **Simplified User Experience**: An intuitive interface designed for clarity and ease of use.
 
 ## App Architecture
-Refer to our detailed [App Architecture Diagram](https://drive.google.com/file/d/1fqQVmU43j-iTlVizx9TdRtVbxn5uwhJv/view?usp=sharing) for an overview of WealthWeave's design and structure.
+Refer to our detailed [App Architecture
+Diagram](https://drive.google.com/file/d/1fqQVmU43j-iTlVizx9TdRtVbxn5uwhJv/view?usp=sharing)
+for an overview of WealthWeave's design and structure.
 
 ## Versioning
 
@@ -19,8 +24,8 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 - **Taimur Hasan** - *Initial work* - [tshasan](https://github.com/tshasan)
+- **Thomas Cremel** - [Ratakor](https://github.com/ratakor)
 
-See also the list of [contributors](link-to-contributors-file) who participated in this project.
 ## License
 
 ## Acknowledgments
