@@ -4,12 +4,13 @@ plugins {
 
 android {
     namespace 'com.example.wealthweave'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.wealthweave"
         minSdk 29
-        targetSdk 33
+        //noinspection EditedTargetSdkVersion
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -31,7 +32,7 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.room:room-common:2.6.1'
     implementation 'androidx.room:room-runtime:2.6.1'
