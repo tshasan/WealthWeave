@@ -19,7 +19,7 @@ for an overview of WealthWeave's design and structure.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+We use [SemVer](http://semver.org/) for versioning. 
 
 ## Authors
 
