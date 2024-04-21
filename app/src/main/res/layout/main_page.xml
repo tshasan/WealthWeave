@@ -1,73 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp"
-                tools:context=".MainActivity"
-                android:background="#f4f4f4">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <!-- App Header -->
-    <TextView
-            android:id="@+id/tvHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:text="WealthWeave"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#333" />
-
-    <TextView
-            android:id="@+id/tvSubHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvHeader"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="Track your group budgets efficiently"
-            android:textColor="#666" />
-
-    <!-- Budget Summary List -->
-    <ListView
-            android:id="@+id/lvBudgetSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvSubHeader"
-            android:layout_marginTop="16dp"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="1dp"
-            android:padding="8dp"
-            android:background="#fff"
-            android:clipToPadding="false" />
-
-    <!-- Action Buttons -->
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lvBudgetSummary"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="16dp">
-
-        <Button
-                android:id="@+id/btnAddExpense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Add Expense"
-                android:background="@color/white"
-                android:textColor="#ffffff" />
-
-        <Button
-                android:id="@+id/btnViewReport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View Report"
-                android:background="@color/white"
-                android:textColor="#ffffff" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/wealthweavelogo"
+        android:contentDescription="@string/todo" />
 
 </RelativeLayout>

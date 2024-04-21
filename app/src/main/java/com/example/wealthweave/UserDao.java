@@ -22,4 +22,10 @@ public interface UserDao {
 
     @Delete
     void deleteUser(User user);
+
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password")
+    User login(String username, String password);
+
+    @Query("SELECT COUNT(userId) FROM users WHERE username = :username")
+    int countUsersByUsername(String username);
 }
