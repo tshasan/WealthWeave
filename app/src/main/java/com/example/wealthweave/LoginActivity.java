@@ -9,9 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import androidx.lifecycle.Observer;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText, passwordEditText;
@@ -39,30 +37,30 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         final String username = usernameEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
-        // Using ExecutorService to handle database operation off the UI thread
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            User user = AppDatabase.getInstance(getApplicationContext()).userDao().login(username, password);
-            // Update UI on the main thread
-            runOnUiThread(() -> {
-                if (user != null) {
-                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    // Save login status to SharedPreferences
-                    SharedPreferences sharedPreferences = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLoggedIn", true);
-                    editor.putString("loggedUsername", username); // this should saver the logged in users username
-                    editor.apply();
 
-                    // Navigate to Home page
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish(); // Close the LoginActivity
-                } else {
-                    errorMessageTextView.setText("Invalid credentials");
-                    errorMessageTextView.setVisibility(View.VISIBLE);
-                }
-            });
-        });
+        // Accessing database using LiveData and observing the result
+        AppDatabase.getInstance(getApplicationContext()).userDao().login(username, password)
+                .observe(this, new Observer<User>() {
+                    @Override
+                    public void onChanged(User user) {
+                        if (user != null) {
+                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            // Save login status to SharedPreferences
+                            SharedPreferences sharedPreferences = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.putString("loggedUsername", username); // this should save the logged-in user's username
+                            editor.apply();
+
+                            // Navigate to Home page
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish(); // Close the LoginActivity
+                        } else {
+                            errorMessageTextView.setText("Invalid credentials");
+                            errorMessageTextView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
 }

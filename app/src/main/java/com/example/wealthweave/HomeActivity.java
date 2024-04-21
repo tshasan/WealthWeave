@@ -7,59 +7,53 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button btnAddExpense, btnViewReport, btnLogout;
+    private Button btnAddExpense, btnViewReport, btnLogout, btnAdminSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+
         btnAddExpense = findViewById(R.id.btnAddExpense);
         btnViewReport = findViewById(R.id.btnViewReport);
         btnLogout = findViewById(R.id.btnLogout);
+        btnAdminSettings = findViewById(R.id.btnAdminSettings);
 
-        Button btnAdminSettings = findViewById(R.id.btnAdminSettings);
-
-        if (userIsAdmin(this)) {
-            btnAdminSettings.setVisibility(View.VISIBLE); // Make the button visible if the user is an admin
-        } else {
-            btnAdminSettings.setVisibility(View.GONE); // Hide the button if the user is not an admin
-        }
-
-
+        checkAdminStatus(); // Asynchronously check if the user is an admin and update UI accordingly
         setupListeners();
     }
 
+    private void checkAdminStatus() {
+        UserDao userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
+        SharedPreferences prefs = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
+        String currentUsername = prefs.getString("loggedUsername", "");
+
+        LiveData<Boolean> isAdminLiveData = userDao.isAdmin(currentUsername);
+        isAdminLiveData.observe(this, isAdmin -> {
+            if (isAdmin != null && isAdmin) {
+                btnAdminSettings.setVisibility(View.VISIBLE);
+            } else {
+                btnAdminSettings.setVisibility(View.GONE);
+            }
+        });
+    }
+
     private void setupListeners() {
-        btnAddExpense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { //TODO implement functionality
-                // Handle Add Expense
-            }
+        btnAddExpense.setOnClickListener(v -> {
+            // TODO: Implement Add Expense functionality
         });
 
-        btnViewReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { //TODO implement functionality
-                // Handle View Report
-            }
+        btnViewReport.setOnClickListener(v -> {
+            // TODO: Implement View Report functionality
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
+        btnLogout.setOnClickListener(v -> logoutUser());
     }
-
-    private boolean userIsAdmin(Context context) {
-        String userRole = LoginManager.getUserRole(context);
-        return userRole.equalsIgnoreCase("admin");
-    }
-
 
     private void logoutUser() {
         SharedPreferences sharedPreferences = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);

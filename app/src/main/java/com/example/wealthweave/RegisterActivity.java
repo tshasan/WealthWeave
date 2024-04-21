@@ -6,9 +6,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText usernameEditText, passwordEditText, confirmPasswordEditText;
+    private UserDao userDao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,8 @@ public class RegisterActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         Button registerButton = findViewById(R.id.registerButton);
+
+        userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,13 +43,22 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        UserDao userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
-        if (userDao.countUsersByUsername(username) == 0) {
-            userDao.insertUser(new User(username, password, false));
-            Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-            Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show();
-        }
+        // Check if username exists using LiveData
+        userDao.countUsersByUsername(username).observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer count) {
+                if (count != null && count == 0) {
+                    // Username does not exist, proceed with registration
+                    User newUser = new User(username, password, false);  // Assume you have a constructor in User class
+                    userDao.insertUser(newUser);
+                    Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                    finish(); // Close activity once registration is complete
+                } else {
+                    // Username exists
+                    Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
+
