@@ -13,6 +13,7 @@ track expenses, and weave their financial growth together.
 - **Simplified User Experience**: An intuitive interface designed for clarity and ease of use.
 
 ## App Architecture
+
 Refer to our detailed [App Architecture
 Diagram](https://drive.google.com/file/d/1fqQVmU43j-iTlVizx9TdRtVbxn5uwhJv/view?usp=sharing)
 for an overview of WealthWeave's design and structure.
