@@ -8,17 +8,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {User.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
+    private static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);
     private static volatile AppDatabase INSTANCE;
     private static final RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            Executors.newSingleThreadScheduledExecutor().execute(() -> {
+            databaseWriteExecutor.execute(() -> {
                 UserDao userDao = INSTANCE.userDao();
+                // Inserting sample users with hashed passwords
                 userDao.insertUser(new User("testuser1", hashPassword("testuser1"), false));
                 userDao.insertUser(new User("admin2", hashPassword("admin2"), true));
             });
@@ -34,6 +37,11 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public static ExecutorService getDatabaseWriteExecutor() {
+        return databaseWriteExecutor;
+    }
+
 
     private static String hashPassword(String password) {
         return "hashed_" + password;

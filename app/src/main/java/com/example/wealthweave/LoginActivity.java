@@ -71,8 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String hashPassword(String password) {
-        // This is a mock hashing function. Replace with real hash function as per your security requirement.
-        return "hashed_" + password;
+        Log.d("LoginActivity", "Password : " + password);
+        return password;
     }
+
 }
 

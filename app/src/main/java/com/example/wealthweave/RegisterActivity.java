@@ -43,16 +43,19 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if username exists using LiveData
         userDao.countUsersByUsername(username).observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer count) {
                 if (count != null && count == 0) {
                     // Username does not exist, proceed with registration
-                    User newUser = new User(username, password, false);  // Assume you have a constructor in User class
-                    userDao.insertUser(newUser);
-                    Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                    finish(); // Close activity once registration is complete
+                    User newUser = new User(username, password, false);  // Assuming you have a constructor in User class
+                    AppDatabase.getDatabaseWriteExecutor().execute(() -> {
+                        userDao.insertUser(newUser);
+                        runOnUiThread(() -> {
+                            Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                            finish(); // Close activity once registration is complete
+                        });
+                    });
                 } else {
                     // Username exists
                     Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
@@ -60,5 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
 
