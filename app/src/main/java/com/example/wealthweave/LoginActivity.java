@@ -34,33 +34,34 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginUser() {
-        final String username = usernameEditText.getText().toString().trim();
-        final String password = passwordEditText.getText().toString().trim();
+private void loginUser() {
+    final String username = usernameEditText.getText().toString().trim();
+    final String password = passwordEditText.getText().toString().trim();
 
-        // Accessing database using LiveData and observing the result
-        AppDatabase.getInstance(getApplicationContext()).userDao().login(username, password)
-                .observe(this, new Observer<User>() {
-                    @Override
-                    public void onChanged(User user) {
-                        if (user != null) {
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            // Save login status to SharedPreferences
-                            SharedPreferences sharedPreferences = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean("isLoggedIn", true);
-                            editor.putString("loggedUsername", username); // this should save the logged-in user's username
-                            editor.apply();
+    Log.d("LoginActivity", "Attempting to login with username: " + username); // Debug log
 
-                            // Navigate to Home page
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                            finish(); // Close the LoginActivity
-                        } else {
-                            errorMessageTextView.setText("Invalid credentials");
-                            errorMessageTextView.setVisibility(View.VISIBLE);
-                        }
+    // Accessing database using LiveData and observing the result
+    AppDatabase.getInstance(getApplicationContext()).userDao().login(username, password)
+            .observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    if (user != null) {
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("isLoggedIn", true);
+                        editor.putString("loggedUsername", username);
+                        editor.apply();
+
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Log.d("LoginActivity", "Login failed for username: " + username); // Debug log
+                        errorMessageTextView.setText("Invalid credentials. Please check your username and password.");
+                        errorMessageTextView.setVisibility(View.VISIBLE);
                     }
-                });
-    }
+                }
+            });
+}
 }
