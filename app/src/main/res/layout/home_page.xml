@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f4f4f4"
     android:padding="16dp"
-    tools:context=".HomeActivity"
-    android:background="#f4f4f4">
+    tools:context=".HomeActivity">
 
     <TextView
         android:id="@+id/tvHeader"
@@ -14,9 +14,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="WealthWeave"
+        android:textColor="#333"
         android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#333" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvSubHeader"
@@ -32,34 +32,34 @@
         android:id="@+id/lvBudgetSummary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/tvSubHeader"
         android:layout_above="@+id/buttonLayout"
+        android:layout_below="@id/tvSubHeader"
         android:layout_marginTop="16dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
+        android:layout_marginBottom="16dp"
         android:background="#fff"
         android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
         android:paddingStart="4dp"
+        android:paddingTop="8dp"
         android:paddingEnd="4dp"
-        android:layout_marginBottom="16dp"/>
+        android:paddingBottom="8dp" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         android:padding="16dp">
 
         <Button
             android:id="@+id/btnAddExpense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="8dp"
+            android:layout_weight="1"
             android:text="Add Expense"
             android:textColor="#333" />
 
@@ -67,8 +67,8 @@
             android:id="@+id/btnViewReport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="8dp"
+            android:layout_weight="1"
             android:text="View Report"
             android:textColor="#333" />
 
