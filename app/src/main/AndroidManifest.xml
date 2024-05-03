@@ -34,5 +34,14 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".SettingActivity"
+            android:exported="true" />
+
+
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="true" />
     </application>
 </manifest>

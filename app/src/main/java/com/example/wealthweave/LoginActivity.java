@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser() {
         String username = usernameEditText.getText().toString().trim();
-        String password = hashPassword(passwordEditText.getText().toString().trim());
+        String password = passwordEditText.getText().toString().trim();
 
         Log.d("LoginActivity", "Attempting to login with username: " + username); // Debug log
 
@@ -69,11 +69,5 @@ public class LoginActivity extends AppCompatActivity {
         errorMessageTextView.setText("Invalid credentials. Please check your username and password.");
         errorMessageTextView.setVisibility(View.VISIBLE);
     }
-
-    private String hashPassword(String password) {
-        Log.d("LoginActivity", "Password : " + password);
-        return password;
-    }
-
 }
 

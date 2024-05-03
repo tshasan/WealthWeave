@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onChanged(Integer count) {
                 if (count != null && count == 0) {
                     // Username does not exist, proceed with registration
-                    User newUser = new User(username, password, false);  // Assuming you have a constructor in User class
+                    User newUser = new User(username, password, false);
                     AppDatabase.getDatabaseWriteExecutor().execute(() -> {
                         userDao.insertUser(newUser);
                         runOnUiThread(() -> {
