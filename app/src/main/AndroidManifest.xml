@@ -36,7 +36,12 @@
             android:exported="true" />
 
         <activity
-                android:name=".AddExpenseActivity"
-                android:exported="true" />
+            android:name=".SettingActivity"
+            android:exported="true" />
+
+
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="true" />
     </application>
 </manifest>
