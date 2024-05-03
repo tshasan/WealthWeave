@@ -59,4 +59,15 @@ public class Expense {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "expenseId=" + expenseId +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", budgetId=" + budgetId +
+                ", userId=" + userId +
+                '}';
+    }
 }

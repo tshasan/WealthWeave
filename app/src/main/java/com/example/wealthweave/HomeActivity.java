@@ -45,7 +45,6 @@ public class HomeActivity extends AppCompatActivity {
     private void setupListeners() {
         btnAddExpense.setOnClickListener(v -> {
             startActivity(new Intent(this, AddExpenseActivity.class));
-            finish();
         });
 
         btnViewReport.setOnClickListener(v -> {
