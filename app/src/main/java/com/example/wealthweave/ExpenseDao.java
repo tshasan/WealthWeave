@@ -14,6 +14,9 @@ public interface ExpenseDao {
     @Query("SELECT * FROM expenses")
     LiveData<List<Expense>> getAllExpenses();
 
+    @Query("SELECT * FROM expenses WHERE budgetID = :budgetId")
+    LiveData<List<Expense>> getAllExpenseFromBudget(int budgetId);
+
     @Query("SELECT * FROM expenses WHERE expenseId = :expenseId")
     LiveData<Expense> getExpenseById(int expenseId);
 
