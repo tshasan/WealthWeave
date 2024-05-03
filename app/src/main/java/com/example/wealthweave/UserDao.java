@@ -36,7 +36,6 @@ public interface UserDao {
     @Query("SELECT COUNT(userId) FROM users WHERE username = :username")
     LiveData<Integer> countUsersByUsername(String username);
 
-    // Additional query to check if a user is an admin
     @Query("SELECT isAdmin FROM users WHERE username = :username")
     LiveData<Boolean> isAdmin(String username);
 }

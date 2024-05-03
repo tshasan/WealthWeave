@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DISPLAY_LENGTH = 1000; // Delay time in milliseconds
+    private static final int SPLASH_DISPLAY_LENGTH = 10; // Delay time in milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
