@@ -8,10 +8,17 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Button btnAddExpense, btnViewReport, btnLogout, btnAdminSettings;
+    private RecyclerView recyclerView;
+    private ExpenseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,20 @@ public class HomeActivity extends AppCompatActivity {
         btnViewReport = findViewById(R.id.btnViewReport);
         btnLogout = findViewById(R.id.btnLogout);
         btnAdminSettings = findViewById(R.id.btnAdminSettings);
+
+        // TODO
+        //  LiveData<List<Expense>> expenses = AppDatabase.getInstance(getApplicationContext()).expenseDao().getAllExpenses();
+        List<Expense> expenses = new ArrayList<Expense>();
+        expenses.add(new Expense("aaa", 12.0, 0, 0));
+        expenses.add(new Expense("bbb", 23.56, 0, 0));
+        expenses.add(new Expense("ccc", 2.0, 0, 0));
+
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new ExpenseAdapter(expenses);
+        recyclerView.setAdapter(adapter);
 
         checkAdminStatus(); // Asynchronously check if the user is an admin and update UI accordingly
         setupListeners();

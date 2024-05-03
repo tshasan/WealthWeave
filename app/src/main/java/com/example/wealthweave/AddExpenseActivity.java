@@ -25,6 +25,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     private void addExpense() {
         String name = expenseName.getText().toString().trim();
         Double amount = Double.parseDouble(expenseAmount.getText().toString().trim());
+        // TODO change userId and budgetId
         Expense expense = new Expense(name, amount, 0, 0);
 
         Log.d("AddExpenseActivity", "Adding " + expense + " to budget");

@@ -7,8 +7,13 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 @Dao
 public interface ExpenseDao {
+    @Query("SELECT * FROM expenses")
+    LiveData<List<Expense>> getAllExpenses();
+
     @Query("SELECT * FROM expenses WHERE expenseId = :expenseId")
     LiveData<Expense> getExpenseById(int expenseId);
 

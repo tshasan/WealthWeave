@@ -28,22 +28,11 @@
         android:text="Track your group budgets efficiently"
         android:textColor="#666" />
 
-    <ListView
-        android:id="@+id/lvBudgetSummary"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_above="@+id/buttonLayout"
-        android:layout_below="@id/tvSubHeader"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#fff"
-        android:clipToPadding="false"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tvSubHeader"/>
 
     <LinearLayout
         android:id="@+id/buttonLayout"
