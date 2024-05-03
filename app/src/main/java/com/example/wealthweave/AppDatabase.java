@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Expense.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);
     private static volatile AppDatabase INSTANCE;
@@ -22,8 +22,8 @@ public abstract class AppDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 UserDao userDao = INSTANCE.userDao();
                 // Inserting sample users with hashed passwords
-                userDao.insertUser(new User("testuser1", hashPassword("testuser1"), false));
-                userDao.insertUser(new User("admin2", hashPassword("admin2"), true));
+                userDao.insertUser(new User("testuser1", "testuser1", false));
+                userDao.insertUser(new User("admin2", "admin2", true));
             });
         }
     };
@@ -42,10 +42,6 @@ public abstract class AppDatabase extends RoomDatabase {
         return databaseWriteExecutor;
     }
 
-
-    private static String hashPassword(String password) {
-        return "hashed_" + password;
-    }
-
     public abstract UserDao userDao();
+    public abstract ExpenseDao expenseDao();
 }
