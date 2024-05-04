@@ -39,6 +39,9 @@
             android:name=".SettingActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".ReportActivity"
+            android:exported="true" />
 
         <activity
             android:name=".AddExpenseActivity"

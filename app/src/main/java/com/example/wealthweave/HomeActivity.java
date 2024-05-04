@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         setupListeners();
     }
 
-//        private void checkAdminStatus() {
+    //        private void checkAdminStatus() {
 //        UserDao userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
 //        SharedPreferences prefs = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
 //        String currentUsername = prefs.getString("loggedUsername", "");
@@ -64,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         btnViewReport.setOnClickListener(v -> {
-            // TODO: Implement View Report functionality
+            startActivity(new Intent(this, ReportActivity.class));
         });
 
         btnLogout.setOnClickListener(v -> logoutUser());
