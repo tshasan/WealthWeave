@@ -131,10 +131,5 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 }
-
-
-// TODO Change password
-// TODO Delete account
-// TODO EXPORT
-// TODO CURRENCY SIGN CHANGE
-// TODO THEME CHANGE
+// TODO EXPORT just print something idk
+// TODO THEME CHANGE change theme based on android 
