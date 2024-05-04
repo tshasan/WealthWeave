@@ -6,17 +6,16 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Button btnAddExpense, btnViewReport, btnLogout, btnSettings;
-    private RecyclerView recyclerView;
-    private ExpenseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,26 +27,22 @@ public class HomeActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
 
-        // checkAdminStatus(); // Asynchronously check if the user is an admin and update UI accordingly
-        // TODO
-        //  LiveData<List<Expense>> expenses = AppDatabase.getInstance(getApplicationContext()).expenseDao().getAllExpenses();
-        List<Expense> expenses = new ArrayList<Expense>();
-        expenses.add(new Expense("aaa", 12.0, 0, 0));
-        expenses.add(new Expense("bbb", 23.56, 0, 0));
-        expenses.add(new Expense("ccc", 2.0, 0, 0));
-
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter = new ExpenseAdapter(expenses);
-        recyclerView.setAdapter(adapter);
+        LiveData<List<Expense>> expensesLiveData = AppDatabase.getInstance(getApplicationContext()).expenseDao().getAllExpenses();
+        expensesLiveData.observe(this, new Observer<List<Expense>>() {
+            @Override
+            public void onChanged(List<Expense> expenses) {
+                RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+                ExpenseAdapter adapter = new ExpenseAdapter(expenses);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
         //checkAdminStatus(); // Asynchronously check if the user is an admin and update UI accordingly
         setupListeners();
     }
 
-    //    private void checkAdminStatus() {
+    //        private void checkAdminStatus() {
 //        UserDao userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
 //        SharedPreferences prefs = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
 //        String currentUsername = prefs.getString("loggedUsername", "");
@@ -68,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         btnViewReport.setOnClickListener(v -> {
-            // TODO: Implement View Report functionality
+            startActivity(new Intent(this, ReportActivity.class));
         });
 
         btnLogout.setOnClickListener(v -> logoutUser());

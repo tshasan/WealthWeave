@@ -21,8 +21,6 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username")
     LiveData<User> getUserByUsername(String username);
 
-    ;
-
     @Insert
     void insertUser(User user);
 
