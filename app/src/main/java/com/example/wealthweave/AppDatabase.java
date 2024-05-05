@@ -21,7 +21,7 @@ public abstract class AppDatabase extends RoomDatabase {
             super.onCreate(db);
             databaseWriteExecutor.execute(() -> {
                 UserDao userDao = INSTANCE.userDao();
-                // Inserting sample users with hashed passwords
+                //insert default users
                 userDao.insertUser(new User("testuser1", "testuser1", false));
                 userDao.insertUser(new User("admin2", "admin2", true));
             });

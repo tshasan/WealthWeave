@@ -27,7 +27,6 @@ public class PiechartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_expense_pie_chart, container, false);
     }
 
@@ -46,28 +45,28 @@ public class PiechartFragment extends Fragment {
     private void updatePieChart(List<ExpenseDao.ExpenseUserSum> userSums) {
         ArrayList<PieEntry> entries = new ArrayList<>();
         for (ExpenseDao.ExpenseUserSum sum : userSums) {
-            // Each entry in the pie chart will be labeled with the user's ID or name
-            entries.add(new PieEntry(sum.total, "User " + sum.userId));
+            entries.add(new PieEntry(sum.total, sum.username));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Expense by User");
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS); // Using vibrant colors for differentiation
-        dataSet.setValueTextSize(12f); // Set the size of the text inside the pie chart
-        dataSet.setValueTextColor(Color.WHITE); // Set the color of the value texts to white for better visibility
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setValueTextSize(12f);
+        dataSet.setValueTextColor(Color.WHITE);
 
         PieData data = new PieData(dataSet);
 
         pieChart.setData(data);
-        pieChart.setEntryLabelColor(Color.BLACK); // Set the color of entry labels (user IDs)
-        pieChart.setEntryLabelTextSize(12f); // Set the size of the labels
-        pieChart.getDescription().setEnabled(false); // Disable the description label on the chart
-        pieChart.setUsePercentValues(true); // Use percentage values instead of raw data
-        pieChart.setExtraOffsets(5, 10, 5, 5); // Adjust offsets to fit labels if needed
-        pieChart.setCenterText("User Expenses Breakdown"); // Set a center text for the chart
-        pieChart.setCenterTextSize(16f); // Set the size of the center text
-        pieChart.animateY(1400, Easing.EaseInOutQuad); // Animate the pie chart on Y-axis
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelTextSize(12f);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.setExtraOffsets(5, 10, 5, 5);
+        pieChart.setCenterText("User Expenses Breakdown");
+        pieChart.setCenterTextSize(16f);
+        pieChart.animateY(1400, Easing.EaseInOutQuad);
 
-        pieChart.invalidate(); // Refreshes the pie chart with new data
+        pieChart.invalidate();
     }
+
 
 }
