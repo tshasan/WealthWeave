@@ -38,25 +38,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //checkAdminStatus(); // Asynchronously check if the user is an admin and update UI accordingly
         setupListeners();
     }
 
-    //        private void checkAdminStatus() {
-//        UserDao userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
-//        SharedPreferences prefs = getSharedPreferences("WealthWeavePrefs", MODE_PRIVATE);
-//        String currentUsername = prefs.getString("loggedUsername", "");
-//
-//        LiveData<Boolean> isAdminLiveData = userDao.isAdmin(currentUsername);
-//        isAdminLiveData.observe(this, isAdmin -> {
-//            if (isAdmin != null && isAdmin) {
-//                btnAdminSettings.setVisibility(View.VISIBLE);
-//            } else {
-//                btnAdminSettings.setVisibility(View.GONE);
-//            }
-//        });
-//    }
-//
     private void setupListeners() {
         btnAddExpense.setOnClickListener(v -> {
             startActivity(new Intent(this, AddExpenseActivity.class));

@@ -28,11 +28,19 @@
         android:text="Track your group budgets efficiently"
         android:textColor="#666" />
 
+    <Spinner
+        android:id="@+id/spinnerBudgets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSubHeader"
+        android:layout_marginTop="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvSubHeader" />
+        android:layout_above="@+id/buttonLayout"
+        android:layout_below="@id/spinnerBudgets" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
@@ -41,7 +49,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:padding="16dp">
-
+        <!-- Buttons are unchanged -->
         <Button
             android:id="@+id/btnAddExpense"
             android:layout_width="0dp"

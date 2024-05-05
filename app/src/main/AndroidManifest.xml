@@ -44,6 +44,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".AdminSettingActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".AddExpenseActivity"
             android:exported="true" />
     </application>
