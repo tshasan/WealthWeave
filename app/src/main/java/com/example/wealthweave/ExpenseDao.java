@@ -38,6 +38,9 @@ public interface ExpenseDao {
     @Update
     void updateExpense(Expense expense);
 
+    @Query("DELETE FROM expenses WHERE userId = :userId")
+    void deleteExpensesByUserId(int userId);
+
     @Delete
     void deleteExpense(Expense expense);
 

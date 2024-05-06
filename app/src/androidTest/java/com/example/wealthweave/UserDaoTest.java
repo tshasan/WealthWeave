@@ -1,7 +1,9 @@
 package com.example.wealthweave;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import android.content.Context;
 
@@ -70,6 +72,6 @@ public class UserDaoTest {
 
         LiveData<User> userLiveData = userDao.getUserByUsername("testUser");
         assertNotNull(userLiveData);
-        assertEquals(null, userLiveData.getValue());
+        assertNull(userLiveData.getValue());
     }
 }

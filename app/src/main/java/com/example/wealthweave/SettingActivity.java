@@ -1,9 +1,13 @@
 package com.example.wealthweave;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LiveData;
 
 import java.util.concurrent.ExecutorService;
@@ -19,8 +24,10 @@ import java.util.concurrent.Executors;
 public class SettingActivity extends AppCompatActivity {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private UserDao userDao;
+    private static final String TAG = "SettingActivity";
     private User currentUser;
     private Button btnAdminSetting;
+    private ExpenseDao expenseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +36,7 @@ public class SettingActivity extends AppCompatActivity {
 
         AppDatabase database = AppDatabase.getInstance(this);
         userDao = database.userDao();
-
+        expenseDao = database.expenseDao();
         Button changePasswordButton = findViewById(R.id.btn_change_password);
         changePasswordButton.setOnClickListener(v -> showChangePasswordDialog());
 
@@ -37,9 +44,7 @@ public class SettingActivity extends AppCompatActivity {
         deleteAccountButton.setOnClickListener(v -> showDeleteUserDialog());
 
         btnAdminSetting = findViewById(R.id.btn_admin_settings);
-        btnAdminSetting.setOnClickListener(v -> {
-            startActivity(new Intent(this, AdminSettingActivity.class));
-        });
+        btnAdminSetting.setOnClickListener(v -> startActivity(new Intent(this, AdminSettingActivity.class)));
         checkAdminStatus();
         observeCurrentUser();
     }
@@ -51,15 +56,47 @@ public class SettingActivity extends AppCompatActivity {
         LiveData<Boolean> isAdminLiveData = userDao.isAdmin(currentUsername);
         isAdminLiveData.observe(this, isAdmin -> {
             btnAdminSetting.setVisibility(isAdmin != null && isAdmin ? View.VISIBLE : View.GONE);
+            if (isAdmin != null && isAdmin) {
+                notifyAdminLogin();
+            }
         });
     }
+
+
+    private void notifyAdminLogin() {
+        Log.d(TAG, "Admin login notification triggered");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            String channelId = "admin_login";
+            if (notificationManager.getNotificationChannel(channelId) == null) {
+                NotificationChannel channel = new NotificationChannel(
+                        channelId,
+                        "Admin Login Notifications",
+                        NotificationManager.IMPORTANCE_HIGH
+                );
+                channel.setDescription("Notifications for admin logins");
+                notificationManager.createNotificationChannel(channel);
+            }
+
+            Notification notification = new NotificationCompat.Builder(this, channelId)
+                    .setContentTitle("Admin Menu Access Granted")
+                    .setContentText("You have access to admin settings")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .build();
+
+            notificationManager.notify(1, notification);
+        } else {
+            Log.d(TAG, "NotificationManager not available");
+        }
+    }
+
 
     private void observeCurrentUser() {
         String currentUsername = LoginManager.getLoggedUsername(this);
         if (currentUsername != null) {
-            userDao.getUserByUsername(currentUsername).observe(this, user -> {
-                currentUser = user; // Cache the current user data
-            });
+            userDao.getUserByUsername(currentUsername).observe(this, user -> currentUser = user);
         }
     }
 
@@ -77,11 +114,13 @@ public class SettingActivity extends AppCompatActivity {
 
     private void handleDeleteUser(AlertDialog dialog) {
         if (currentUser != null) {
+            int userId = currentUser.getUserId();
             executor.submit(() -> {
+                expenseDao.deleteExpensesByUserId(userId);
                 userDao.deleteUser(currentUser);
                 LoginManager.logout(this);
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "Account deleted successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Account and related expenses deleted successfully", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     startActivity(new Intent(this, MainActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -90,6 +129,7 @@ public class SettingActivity extends AppCompatActivity {
             });
         }
     }
+
 
     private void showChangePasswordDialog() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_change_password, null);

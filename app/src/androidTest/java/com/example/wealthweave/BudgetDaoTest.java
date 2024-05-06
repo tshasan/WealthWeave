@@ -1,8 +1,12 @@
 package com.example.wealthweave;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
@@ -53,7 +57,7 @@ public class BudgetDaoTest {
 
         LiveData<Budget> budgetLiveData = budgetDao.getBudgetByName("updatedBudget");
         assertNotNull(budgetLiveData);
-        // assertNotNull(budgetLiveData.getValue());
+        //assertNotNull(budgetLiveData.getValue());
         // assertEquals(updatedBudget.getName(), budgetLiveData.getValue().getName());
         // assertEquals(updatedBudget.getPassword(), budgetLiveData.getValue().getPassword());
         // assertEquals(updatedBudget.isAdmin(), budgetLiveData.getValue().isAdmin());
@@ -68,6 +72,6 @@ public class BudgetDaoTest {
 
         LiveData<Budget> budgetLiveData = budgetDao.getBudgetByName("testBudget");
         assertNotNull(budgetLiveData);
-        assertEquals(null, budgetLiveData.getValue());
+        assertNull(budgetLiveData.getValue());
     }
 }

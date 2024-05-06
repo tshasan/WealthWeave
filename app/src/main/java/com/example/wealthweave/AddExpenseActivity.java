@@ -9,11 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    private EditText expenseName, expenseAmount;
-    private Button addButton;
+    private EditText expenseName;
+    private EditText expenseAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button addButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_expense_page);
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
-    private List<Expense> expenses;
+    private final List<Expense> expenses;
 
     public ExpenseAdapter(List<Expense> expenses) {
         this.expenses = expenses;
@@ -27,8 +27,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Expense expense = expenses.get(position);
-        holder.textViewName.setText(" - " + expense.getName());
-        holder.textViewAmount.setText("$" + expense.getAmount().toString());
+        holder.textViewName.setText(String.format(" - %s", expense.getName()));
+        holder.textViewAmount.setText(String.format("$%s", expense.getAmount().toString()));
     }
 
     @Override
@@ -37,7 +37,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewName, textViewAmount;
+        TextView textViewName;
+        TextView textViewAmount;
 
         public ViewHolder(View itemView) {
             super(itemView);

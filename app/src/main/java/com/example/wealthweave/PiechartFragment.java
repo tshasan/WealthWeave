@@ -22,7 +22,7 @@ import java.util.List;
 
 public class PiechartFragment extends Fragment {
     private PieChart pieChart;
-    private ExpenseViewModel viewModel;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,13 +31,14 @@ public class PiechartFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) { // ok this is causing some problem but idk how to fix guide wasnt up to date
         super.onViewCreated(view, savedInstanceState);
         pieChart = view.findViewById(R.id.pieChart);
         setupPieChart();
     }
 
     private void setupPieChart() {
+        ExpenseViewModel viewModel;
         viewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
         viewModel.getExpenseSumByUser().observe(getViewLifecycleOwner(), this::updatePieChart);
     }
