@@ -1,16 +1,16 @@
 package com.example.wealthweave;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText usernameEditText, passwordEditText, confirmPasswordEditText;
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
     private UserDao userDao;
 
     @Override
@@ -25,12 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerUser();
-            }
-        });
+        registerButton.setOnClickListener(v -> registerUser());
     }
 
     private void registerUser() {
@@ -43,23 +38,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        userDao.countUsersByUsername(username).observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer count) {
-                if (count != null && count == 0) {
-                    // Username does not exist, proceed with registration
-                    User newUser = new User(username, password, false);
-                    AppDatabase.getDatabaseWriteExecutor().execute(() -> {
-                        userDao.insertUser(newUser);
-                        runOnUiThread(() -> {
-                            Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                            finish(); // Close activity once registration is complete
-                        });
+        userDao.countUsersByUsername(username).observe(this, count -> {
+            if (count != null && count == 0) {
+                // Username does not exist, proceed with registration
+                User newUser = new User(username, password, false);
+                AppDatabase.getDatabaseWriteExecutor().execute(() -> {
+                    userDao.insertUser(newUser);
+                    runOnUiThread(() -> {
+                        Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                        finish(); // Close activity once registration is complete
                     });
-                } else {
-                    // Username exists
-                    Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
-                }
+                });
+            } else {
+                // Username exists
+                Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -13,8 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText usernameEditText, passwordEditText;
-    private Button loginButton, registerButton;
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private Button loginButton, registerButton; // this is weird and is causing problems
     private TextView errorMessageTextView;
 
     @Override

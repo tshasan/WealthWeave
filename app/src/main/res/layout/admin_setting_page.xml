@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Admin Settings"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <!-- Section for deleting users -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Delete User"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/etDeleteUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter username" />
+
+        <Button
+            android:id="@+id/btnDeleteUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="Delete User" />
+
+        <!-- Section for removing expenses -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Remove Expense"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/etDeleteExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter expense name" />
+
+        <Button
+            android:id="@+id/btnDeleteExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Remove Expense" />
+
+    </LinearLayout>
+</ScrollView>

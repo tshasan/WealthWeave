@@ -3,7 +3,7 @@ package com.example.wealthweave;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class LoginManager {
+public class LoginManager { // i think this should be a utility class or something
 
     private static final String PREF_NAME = "WealthWeavePrefs";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";

@@ -21,6 +21,10 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username")
     LiveData<User> getUserByUsername(String username);
 
+    @Query("SELECT * FROM users WHERE username = :username")
+    List<User> getUsersByUsername(String username);
+
+
     @Insert
     void insertUser(User user);
 
@@ -29,7 +33,6 @@ public interface UserDao {
 
     @Query("UPDATE users SET password = :newPassword WHERE username = :username")
     void updatePassword(String username, String newPassword);
-
 
     @Delete
     void deleteUser(User user);

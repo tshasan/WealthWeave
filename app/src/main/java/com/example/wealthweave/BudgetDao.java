@@ -13,7 +13,7 @@ public interface BudgetDao {
     LiveData<Budget> getBudgetById(int budgetId);
 
     @Query("SELECT * FROM budgets WHERE name = :budgetName")
-    LiveData<Budget> getBudgetByName(int budgetName);
+    LiveData<Budget> getBudgetByName(String budgetName);
 
     @Insert
     void insertBudget(Budget budget);
